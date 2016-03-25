@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist>
+    <dict>
+        <key>host</key>
+        <string>https://testing.zeta.feedhenry.com</string>
+        <key>appid</key>
+        <string>uyaskqxfa4vty63nysbwedpp</string>
+        <key>projectid</key>
+        <string>uyaskqtk3luyldmhsadky3fm</string>
+        <key>appkey</key>
+        <string>8856c89e80b3e1caf098f0c90f75d14c2f6577a2</string>
+        <key>connectiontag</key>
+        <string>0.0.1</string>
+        <key>serverURL</key>
+        <string>https://testing.zeta.feedhenry.com/api/v2/ag-push/</string>
+        <key>variantID</key>
+        <string>969ef88e-1e75-4dfd-a26f-cf17e53764c5</string>
+        <key>variantSecret</key>
+        <string>379feac3-b664-4d3e-a3d0-a72224700379</string>
+    </dict>
+</plist>

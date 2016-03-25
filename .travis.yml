@@ -1,0 +1,13 @@
+
+language: objective-c
+osx_image: xcode7
+xcode_project: PushStarter.xcodeproj
+xcode_scheme: PushStarter
+xcode_sdk: iphonesimulator
+
+notifications:
+  irc: "irc.freenode.org#feedhenry"
+
+branches:
+  only:
+    - master
