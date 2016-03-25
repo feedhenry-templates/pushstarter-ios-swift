@@ -17,5 +17,7 @@ xcuserdata
 *.xccheckout
 docset-installed.txt
 
-# Exclude cocoapods folder
+# Exclude CocoaPods folder
 Pods/
+*.xcworkspace
+xcuserdata

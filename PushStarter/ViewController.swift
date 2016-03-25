@@ -44,6 +44,7 @@ class ViewController : UITableViewController {
         }
         
         isRegistered = true
+        tableView.reloadData()
     }
     
     func errorRegistration() {
@@ -55,7 +56,19 @@ class ViewController : UITableViewController {
     
     func messageReceived(notification: NSNotification) {
         print("received")
-        messages.append(notification.object as! String)
+        
+        let obj:AnyObject? = notification.userInfo!["aps"]!["alert"]
+        
+        // if alert is a flat string
+        if let msg = obj as? String {
+            messages.append(msg)
+        } else {
+            // if the alert is a dictionary we need to extract the value of the body key
+            let msg = obj!["body"] as! String
+            messages.append(msg)
+        }
+        
+        tableView.reloadData()
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {

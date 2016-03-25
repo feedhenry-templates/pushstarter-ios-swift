@@ -15,7 +15,7 @@
  */
 
 import UIKit
-import FH
+import FeedHenry
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -62,11 +62,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        FH.pushRegister(deviceToken, andSuccess: { res in
-            let notification = NSNotification(name: "sucess_registered", object: nil)
+        FH.pushRegister(deviceToken, success: { res in
+            let notification = NSNotification(name: "success_registered", object: nil)
             NSNotificationCenter.defaultCenter().postNotification(notification)
             print("Unified Push registration successful")
-        }, andFailure: {failed in
+        }, error: {failed in
             let notification = NSNotification(name: "error_register", object: nil)
             NSNotificationCenter.defaultCenter().postNotification(notification)
             print("Unified Push registration Error \(failed.error)")
