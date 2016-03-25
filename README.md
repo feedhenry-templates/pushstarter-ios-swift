@@ -1,4 +1,4 @@
-# pushstarter-ios-app [![Build Status](https://travis-ci.org/feedhenry-templates/pushstarter-ios-app.png)](https://travis-ci.org/feedhenry-templates/pushstarter-ios-app)
+# pushstarter-ios-swift [![Build Status](https://travis-ci.org/feedhenry-templates/pushstarter-ios-swift.png)](https://travis-ci.org/feedhenry-templates/pushstarter-ios-swift)
 
 > ObjC version of PushStarter iOS app is available [here](https://github.com/feedhenry-templates/pushstarter-ios-app/).
 
@@ -6,13 +6,12 @@
 
 Author: Corinne Krych   
 Level: Intermediate  
-Technologies: Swift, iOS, RHMAP, CocoaPods.
-Summary: A demonstration of how to include basic push functionality with RHMAP.
-Community Project : [Feed Henry](http://feedhenry.org)
+Technologies: Swift, iOS, RHMAP, CocoaPods.  
+Summary: A demonstration of how to include basic push functionality with RHMAP.Community Project : [Feed Henry](http://feedhenry.org)
 Target Product: RHMAP  
 Product Versions: RHMAP 3.7.0+   
 Source: https://github.com/feedhenry-templates/pushstarter-ios-app  
-Prerequisites: fh-ios-sdk : 3.+, Xcode : 7.2+, iOS SDK : iOS7+
+Prerequisites: fh-ios-swift-sdk : 3.+, Xcode : 7.2+, iOS SDK : iOS8+
 
 ## What is it?
 
@@ -54,11 +53,11 @@ In ```PushStarter/AppDelegate.swift``` you register for notification as below:
 
 ```Swift
 func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-  FH.pushRegister(deviceToken, andSuccess: { res in // [1]
+  FH.pushRegister(deviceToken, success: { res in // [1]
     let notification = NSNotification(name: "sucess_registered", object: nil)
     NSNotificationCenter.defaultCenter().postNotification(notification)
     print("Unified Push registration successful")
-  }, andFailure: {failed in                         // [2]
+  }, failure: {failed in                         // [2]
     let notification = NSNotification(name: "error_register", object: nil)
     NSNotificationCenter.defaultCenter().postNotification(notification)
     print("Unified Push registration Error \(failed.error)")
