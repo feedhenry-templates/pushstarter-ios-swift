@@ -17,7 +17,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   FeedHenry:
-    :commit: 54bdee0dfda1c7a6d94fa23509a6994a7a61ed92
+    :commit: 79131a54e8127d5a71fd8ffa40d7d6740bb37766
     :git: git@github.com:corinnekrych/fh-ios-swift-sdk.git
 
 SPEC CHECKSUMS:
