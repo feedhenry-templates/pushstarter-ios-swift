@@ -1,29 +1,28 @@
 PODS:
   - AeroGear-Push-Swift (1.2.0)
   - AeroGearHttp (0.5.1)
-  - FeedHenry (4.0.0-alpha1):
+  - FeedHenry (4.0.0):
     - AeroGear-Push-Swift
     - AeroGearHttp
     - ReachabilitySwift
   - ReachabilitySwift (2.3.3)
 
 DEPENDENCIES:
-  - FeedHenry (from `git@github.com:corinnekrych/fh-ios-swift-sdk.git`, branch `FH-2566.push.sdk`)
+  - FeedHenry (from `https://github.com/feedhenry/fh-ios-swift-sdk.git`)
 
 EXTERNAL SOURCES:
   FeedHenry:
-    :branch: FH-2566.push.sdk
-    :git: git@github.com:corinnekrych/fh-ios-swift-sdk.git
+    :git: https://github.com/feedhenry/fh-ios-swift-sdk.git
 
 CHECKOUT OPTIONS:
   FeedHenry:
-    :commit: 79131a54e8127d5a71fd8ffa40d7d6740bb37766
-    :git: git@github.com:corinnekrych/fh-ios-swift-sdk.git
+    :commit: ec584b9e3c15387c453a68536640c4692adf1022
+    :git: https://github.com/feedhenry/fh-ios-swift-sdk.git
 
 SPEC CHECKSUMS:
   AeroGear-Push-Swift: 2b6ada18939e58d003e6a2315c22be22556048b1
   AeroGearHttp: 9eb405b694aa9ac5daff842f68648f4a9fe0fa66
-  FeedHenry: e54c45a8449c8f97097be0fb581e24313a8a858c
+  FeedHenry: ab38e23779907d9afbb4e2a8cbfabbb321bfef07
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
 
 COCOAPODS: 0.39.0
