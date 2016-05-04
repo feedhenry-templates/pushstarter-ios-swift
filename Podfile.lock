@@ -8,7 +8,7 @@ PODS:
   - ReachabilitySwift (2.3.3)
 
 DEPENDENCIES:
-  - FeedHenry
+  - FeedHenry (= 4.0.0)
 
 SPEC CHECKSUMS:
   AeroGear-Push-Swift: 2b6ada18939e58d003e6a2315c22be22556048b1
