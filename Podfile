@@ -1,7 +1,9 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-xcodeproj 'PushStarter.xcodeproj'
+project 'PushStarter.xcodeproj'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'FeedHenry', '~> 4.1.1'
+target 'PushStarter' do
+	pod 'FeedHenry', '~> 4.1.1'
+end
