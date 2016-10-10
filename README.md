@@ -34,14 +34,10 @@ If you wish to contribute to this template, the following information may be hel
 ## Build instructions
 
 1. Clone this project
-
-2. Populate ```PushStarter/fhconfig.plist``` with your values as explained [here](http://docs.feedhenry.com/v3/dev_tools/sdks/ios.html#ios-configure).
-
-3. Run ```pod install```
-
-4. Open PushStarter.xcworkspace
-
-4. Run the project
+1. Populate ```PushStarter/fhconfig.plist``` with your values as explained [here](http://docs.feedhenry.com/v3/dev_tools/sdks/ios.html#ios-configure).
+1. Run ```pod install```
+1. Open PushStarter.xcworkspace
+1. Run the project
  
 ## How does it work?
 
@@ -62,6 +58,7 @@ func application(application: UIApplication, didRegisterForRemoteNotificationsWi
   })
 }
 ```
+
 Register FH to receive remote push notification with success [1] and failure [2] callbacks.
 
 ### FH receives remote push notification
