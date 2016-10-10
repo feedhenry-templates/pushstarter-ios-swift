@@ -2,8 +2,6 @@
 
 > ObjC version of PushStarter iOS app is available [here](https://github.com/feedhenry-templates/pushstarter-ios-app/).
 
-> ObjC/Cocoapods of PushStarter iOS app is available [here](https://github.com/feedhenry-templates/pushstarter-ios-app/tree/cocoapods).
-
 Author: Corinne Krych   
 Level: Intermediate  
 Technologies: Swift, iOS, RHMAP, CocoaPods.  
