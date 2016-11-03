@@ -3,18 +3,18 @@
 <plist version="1.0">
 <dict>
 	<key>host</key>
-	<string>https://testing.zeta.feedhenry.com/</string>
+	<string>Server URL</string>
 	<key>appid</key>
-	<string>uyaskqxfa4vty63nysbwedpp</string>
+	<string>App ID</string>
 	<key>projectid</key>
-	<string>uyaskqtk3luyldmhsadky3fm</string>
+	<string>Project ID</string>
 	<key>appkey</key>
-	<string>8856c89e80b3e1caf098f0c90f75d14c2f6577a2</string>
+	<string>App Key</string>
 	<key>connectiontag</key>
-	<string>0.0.1</string>
+	<string>Connection Tag</string>
 	<key>variantID</key>
-	<string>969ef88e-1e75-4dfd-a26f-cf17e53764c5</string>
+	<string>Variant ID</string>
 	<key>variantSecret</key>
-	<string>379feac3-b664-4d3e-a3d0-a72224700379</string>
+	<string>Variant Secret</string>
 </dict>
 </plist>
