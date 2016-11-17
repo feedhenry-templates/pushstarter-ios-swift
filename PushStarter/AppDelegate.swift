@@ -22,81 +22,102 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        FH.pushEnabledForRemoteNotification(application)
-        FH.sendMetricsWhenAppLaunched(launchOptions)
-        
-        if launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] != nil {
-            if launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey]?.isKindOfClass(NSDictionary) != nil {
-                print("Was opened with notification:\(launchOptions![UIApplicationLaunchOptionsRemoteNotificationKey])")
-                let defaults = NSUserDefaults.standardUserDefaults()
-                defaults.setObject(self.pushMessageContent((launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey])! as! [NSObject : AnyObject]), forKey: "message_received")
+        FH.pushEnabledForRemoteNotification(application: application)
+        FH.sendMetricsWhenAppLaunched(launchOptions: launchOptions)
+
+        // Display all push messages (even the message used to open the app)
+        if let options = launchOptions {
+            if let option = options[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: Any] {
+                print("Was opened with notification:\(option)")
+                let defaults: UserDefaults = UserDefaults.standard;
+                // Send a message received signal to display the notification in the table.
+                defaults.set(self.pushMessageContent(option), forKey: "message_received")
                 defaults.synchronize()
+
             }
         }
-        
+
         return true
     }
     
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
     
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
     
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
     
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
     
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        FH.pushRegister(deviceToken, success: { res in
-            let notification = NSNotification(name: "success_registered", object: nil)
-            NSNotificationCenter.defaultCenter().postNotification(notification)
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        FH.pushRegister(deviceToken: deviceToken, success: { res in
+            let notification = NSNotification(name: NSNotification.Name(rawValue: "success_registered"), object: nil)
+            NotificationCenter.default.post(notification as Notification)
             print("Unified Push registration successful")
         }, error: {failed in
-            let notification = NSNotification(name: "error_register", object: nil)
-            NSNotificationCenter.defaultCenter().postNotification(notification)
+            let notification = NSNotification(name: NSNotification.Name(rawValue: "error_register"), object: nil)
+            NotificationCenter.default.post(notification as Notification)
             print("Unified Push registration Error \(failed.error)")
         })
     }
     
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        let notification:NSNotification = NSNotification(name:"error_register", object:nil, userInfo:nil)
-        NSNotificationCenter.defaultCenter().postNotification(notification)
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        let notification:Notification = Notification(name:Notification.Name(rawValue: "error_register"), object:nil, userInfo:nil)
+        NotificationCenter.default.post(notification)
         print("Unified Push registration Error \(error)")
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject: AnyObject]) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         // When a message is received, send NSNotification, would be handled by registered ViewController
-        let notification:NSNotification = NSNotification(name:"message_received", object:nil, userInfo:userInfo)
-        NSNotificationCenter.defaultCenter().postNotification(notification)
+        let notification:Notification = Notification(name:Notification.Name(rawValue: "message_received"), object:nil, userInfo:userInfo)
+        NotificationCenter.default.post(notification)
         print("UPS message received: \(userInfo)")
         
         // Send metrics when app is launched due to push notification
-        FH.sendMetricsWhenAppAwoken(application.applicationState, userInfo: userInfo)
+        FH.sendMetricsWhenAppAwoken(applicationState: application.applicationState, userInfo: userInfo)
     }
     
-    func pushMessageContent(userInfo: [NSObject : AnyObject]) -> String {
-        var content: String
-        if let alert = userInfo["aps"]!["alert"]! as? String {
-            content = alert
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        // When a message is received, send Notification, would be handled by registered ViewController
+        let notification:Notification = Notification(name: Notification.Name(rawValue: "message_received"), object:nil, userInfo:userInfo)
+        NotificationCenter.default.post(notification)
+        print("UPS message received: \(userInfo)")
+
+        // Send metrics when app is launched due to push notification
+        FH.sendMetricsWhenAppAwoken(applicationState: application.applicationState, userInfo: userInfo)
+
+        // No additioanl data to fetch
+        fetchCompletionHandler(UIBackgroundFetchResult.noData)
+    }
+
+    func pushMessageContent(_ userInfo: [AnyHashable: Any]) -> String {
+        var content: String = ""
+        if let aps = userInfo["aps"] as? [String: Any] {
+            if let alert = aps["alert"] as? String {
+                content = alert
+            } else {
+                if let alert = aps["alert"] as? [String: Any] {
+                    let msg = alert["body"]
+                    content = msg as! String
+                }
+            }
         }
-        else {
-            content = (userInfo["aps"]!["alert"] as! Dictionary)["body"]!
-        }
+
         return content
     }
 }

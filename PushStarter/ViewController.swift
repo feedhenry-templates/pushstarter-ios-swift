@@ -26,17 +26,17 @@ class ViewController : UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.registered), name: "success_registered", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.errorRegistration), name: "error_register", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.messageReceived(_:)), name: "message_received", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.registered), name: NSNotification.Name(rawValue: "success_registered"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.errorRegistration), name: NSNotification.Name(rawValue: "error_register"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.messageReceived(_:)), name: NSNotification.Name(rawValue: "message_received"), object: nil)
     }
     
     func registered() {
         print("registered")
         
-        let defaults = NSUserDefaults.standardUserDefaults()
-        let msg = defaults.objectForKey("message_received")
-        defaults.removeObjectForKey("message_recieved")
+        let defaults = UserDefaults.standard
+        let msg = defaults.object(forKey: "message_received")
+        defaults.removeObject(forKey: "message_recieved")
         defaults.synchronize()
         
         if (msg != nil) {
@@ -54,55 +54,58 @@ class ViewController : UITableViewController {
         alert.show()
     }
     
-    func messageReceived(notification: NSNotification) {
+    func messageReceived(_ notification: Notification) {
         print("received")
         
-        let obj:AnyObject? = notification.userInfo!["aps"]!["alert"]
-        
-        // if alert is a flat string
-        if let msg = obj as? String {
-            messages.append(msg)
-        } else {
-            // if the alert is a dictionary we need to extract the value of the body key
-            let msg = obj!["body"] as! String
-            messages.append(msg)
+        if let aps : [String: AnyObject] = notification.userInfo!["aps"] as? [String: AnyObject] {
+            let obj:AnyObject? = aps["alert"]
+            
+            // if alert is a flat string
+            if let msg = obj as? String {
+                messages.append(msg)
+            } else {
+                // if the alert is a dictionary we need to extract the value of the body key
+                let msg = obj!["body"] as! String
+                messages.append(msg)
+            }
+            
+            tableView.reloadData()
         }
         
-        tableView.reloadData()
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         var bgView: UIView? = nil
         
         if (!isRegistered) {
-            let progress = self.navigationController?.storyboard?.instantiateViewControllerWithIdentifier("ProgressViewController")
+            let progress = self.navigationController?.storyboard?.instantiateViewController(withIdentifier: "ProgressViewController")
             bgView = progress?.view
         } else if (messages.isEmpty) {
-            let empty = self.navigationController?.storyboard?.instantiateViewControllerWithIdentifier("EmptyViewController")
+            let empty = self.navigationController?.storyboard?.instantiateViewController(withIdentifier: "EmptyViewController")
             bgView = empty?.view;
         }
         
         if (bgView != nil) {
             self.tableView.backgroundView = bgView
-            self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+            self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
             return 0;
         }
         
         return 1;
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count;
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // if it's the first message in the stream, let's clear the 'empty' placeholder vier
         if (self.tableView.backgroundView != nil) {
             self.tableView.backgroundView = nil
-            self.tableView.separatorStyle = .SingleLine
+            self.tableView.separatorStyle = .singleLine
         }
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(NotificationCellIdentifier)!
+        let cell = tableView.dequeueReusableCell(withIdentifier: NotificationCellIdentifier)!
         cell.textLabel?.text = messages[indexPath.row]
         
         return cell
