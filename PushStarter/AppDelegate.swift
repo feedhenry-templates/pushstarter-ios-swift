@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Was opened with notification:\(option)")
                 let defaults: UserDefaults = UserDefaults.standard;
                 // Send a message received signal to display the notification in the table.
-                defaults.set(self.pushMessageContent(option), forKey: "message_received")
+                defaults.set(self.pushMessageContent(userInfo: option), forKey: "message_received")
                 defaults.synchronize()
 
             }
@@ -105,7 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         fetchCompletionHandler(UIBackgroundFetchResult.noData)
     }
 
-    func pushMessageContent(_ userInfo: [AnyHashable: Any]) -> String {
+    func pushMessageContent(userInfo: [AnyHashable: Any]) -> String {
         var content: String = ""
         if let aps = userInfo["aps"] as? [String: Any] {
             if let alert = aps["alert"] as? String {

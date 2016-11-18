@@ -28,7 +28,7 @@ class ViewController : UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.registered), name: NSNotification.Name(rawValue: "success_registered"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.errorRegistration), name: NSNotification.Name(rawValue: "error_register"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.messageReceived(_:)), name: NSNotification.Name(rawValue: "message_received"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.messageReceived(notification:)), name: NSNotification.Name(rawValue: "message_received"), object: nil)
     }
     
     func registered() {
@@ -54,7 +54,7 @@ class ViewController : UITableViewController {
         alert.show()
     }
     
-    func messageReceived(_ notification: Notification) {
+    func messageReceived(notification: Notification) {
         print("received")
         
         if let aps : [String: AnyObject] = notification.userInfo!["aps"] as? [String: AnyObject] {
