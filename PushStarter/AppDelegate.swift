@@ -66,11 +66,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         FH.pushRegister(deviceToken: deviceToken, success: { res in
-            let notification = NSNotification(name: NSNotification.Name(rawValue: "success_registered"), object: nil)
+            let notification = Notification(name: Notification.Name(rawValue: "success_registered"), object: nil)
             NotificationCenter.default.post(notification as Notification)
             print("Unified Push registration successful")
         }, error: {failed in
-            let notification = NSNotification(name: NSNotification.Name(rawValue: "error_register"), object: nil)
+            let notification = Notification(name: Notification.Name(rawValue: "error_register"), object: nil)
             NotificationCenter.default.post(notification as Notification)
             print("Unified Push registration Error \(failed.error)")
         })
@@ -83,7 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-        // When a message is received, send NSNotification, would be handled by registered ViewController
+        // When a message is received, send Notification, would be handled by registered ViewController
         let notification:Notification = Notification(name:Notification.Name(rawValue: "message_received"), object:nil, userInfo:userInfo)
         NotificationCenter.default.post(notification)
         print("UPS message received: \(userInfo)")

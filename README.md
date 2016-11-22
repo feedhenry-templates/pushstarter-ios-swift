@@ -54,12 +54,8 @@ In ```PushStarter/AppDelegate.swift``` you register for notification as below:
 ```Swift
 func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
     FH.pushRegister(deviceToken: deviceToken, success: { res in // [1]
-        let notification = NSNotification(name: NSNotification.Name(rawValue: "success_registered"), object: nil)
-        NotificationCenter.default.post(notification as Notification)
         print("Unified Push registration successful")
     }, error: {failed in                                        // [2]
-        let notification = NSNotification(name: NSNotification.Name(rawValue: "error_register"), object: nil)
-        NotificationCenter.default.post(notification as Notification)
         print("Unified Push registration Error \(failed.error)")
     })
 }
@@ -72,7 +68,7 @@ To receive notification, in ```PushStarter/AppDelegate.swift```:
 
 ```Swift
 func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-    // When a message is received, send NSNotification, would be handled by registered ViewController
+    // When a message is received, send Notification, would be handled by registered ViewController
     let notification:Notification = Notification(name:Notification.Name(rawValue: "message_received"), object:nil, userInfo:userInfo)
     NotificationCenter.default.post(notification)
     print("UPS message received: \(userInfo)")
