@@ -5,5 +5,5 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'PushStarter' do
-	pod 'FeedHenry', '~> 4.1.1'
+	pod 'FeedHenry', :git => 'https://github.com/feedhenry/fh-ios-swift-sdk.git', :branch => '4.1.2'
 end
