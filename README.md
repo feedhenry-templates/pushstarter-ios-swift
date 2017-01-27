@@ -6,12 +6,12 @@
 
 Author: Corinne Krych   
 Level: Intermediate  
-Technologies: Swift, iOS, RHMAP, CocoaPods.  
+Technologies: Swift 3, iOS, RHMAP, CocoaPods.  
 Summary: A demonstration of how to include basic push functionality with RHMAP.Community Project : [Feed Henry](http://feedhenry.org)
 Target Product: RHMAP  
 Product Versions: RHMAP 3.7.0+   
 Source: https://github.com/feedhenry-templates/pushstarter-ios-app  
-Prerequisites: fh-ios-swift-sdk : 3.+, Xcode : 7.2+, iOS SDK : iOS8+, CocoaPods 1.0.1+
+Prerequisites: fh-ios-swift-sdk : 5+, Xcode : 8+, iOS SDK : iOS8+, CocoaPods 1.1.0+
 
 ## What is it?
 
@@ -52,16 +52,12 @@ If you wish to contribute to this template, the following information may be hel
 In ```PushStarter/AppDelegate.swift``` you register for notification as below:
 
 ```Swift
-func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-  FH.pushRegister(deviceToken, success: { res in // [1]
-    let notification = NSNotification(name: "sucess_registered", object: nil)
-    NSNotificationCenter.defaultCenter().postNotification(notification)
-    print("Unified Push registration successful")
-  }, failure: {failed in                         // [2]
-    let notification = NSNotification(name: "error_register", object: nil)
-    NSNotificationCenter.defaultCenter().postNotification(notification)
-    print("Unified Push registration Error \(failed.error)")
-  })
+func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    FH.pushRegister(deviceToken: deviceToken, success: { res in // [1]
+        print("Unified Push registration successful")
+    }, error: {failed in                                        // [2]
+        print("Unified Push registration Error \(failed.error)")
+    })
 }
 ```
 Register FH to receive remote push notification with success [1] and failure [2] callbacks.
@@ -71,8 +67,14 @@ Register FH to receive remote push notification with success [1] and failure [2]
 To receive notification, in ```PushStarter/AppDelegate.swift```:
 
 ```Swift
-func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject: AnyObject]) {
-  print("UPS message received: \(userInfo)")
+func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+    // When a message is received, send Notification, would be handled by registered ViewController
+    let notification:Notification = Notification(name:Notification.Name(rawValue: "message_received"), object:nil, userInfo:userInfo)
+    NotificationCenter.default.post(notification)
+    print("UPS message received: \(userInfo)")
+    
+    // Send metrics when app is launched due to push notification
+    FH.sendMetricsWhenAppAwoken(applicationState: application.applicationState, userInfo: userInfo)
 }
 ```
 ### iOS9 and non TLS1.2 backend
