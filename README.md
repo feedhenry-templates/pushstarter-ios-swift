@@ -1,4 +1,5 @@
-# pushstarter-ios-swift [![Build Status](https://travis-ci.org/feedhenry-templates/pushstarter-ios-swift.png)](https://travis-ci.org/feedhenry-templates/pushstarter-ios-swift)
+# pushstarter-ios-swift
+[![Build Status](https://travis-ci.org/feedhenry-templates/pushstarter-ios-swift.png)](https://travis-ci.org/feedhenry-templates/pushstarter-ios-swift)
 
 > ObjC version of PushStarter iOS app is available [here](https://github.com/feedhenry-templates/pushstarter-ios-app/).
 
