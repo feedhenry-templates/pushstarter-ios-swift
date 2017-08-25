@@ -10,7 +10,7 @@ Summary: A demonstration of how to include basic push functionality with RHMAP.
 Community Project : [Feed Henry](http://feedhenry.org)   
 Target Product: RHMAP  
 Product Versions: RHMAP 3.7.0+   
-Source: https://github.com/feedhenry-templates/pushstarter-ios-app   
+Source: https://github.com/feedhenry-templates/pushstarter-ios-swift   
 Prerequisites: fh-ios-swift-sdk: 5+, Xcode: 8+, iOS SDK: iOS 9+, CocoaPods 1.3.0+
 
 ## What is it?
