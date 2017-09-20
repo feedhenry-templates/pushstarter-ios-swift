@@ -48,10 +48,9 @@ class ViewController : UITableViewController {
     }
     
     func errorRegistration() {
-        let alert = UIAlertView()
-        alert.title = "Registration Error"
-        alert.message = "Please verify the provisionioning profile and the UPS details have been setup correctly."
-        alert.show()
+        let alert = UIAlertController(title: "Registration Error", message: "Please verify the provisionioning profile and the UPS details have been setup correctly.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func messageReceived(notification: Notification) {
