@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }, error: {failed in
             let notification = Notification(name: Notification.Name(rawValue: "error_register"), object: nil)
             NotificationCenter.default.post(notification as Notification)
-            print("Unified Push registration Error \(failed.error)")
+            print("Unified Push registration Error \(String(describing: failed.error))")
         })
     }
     

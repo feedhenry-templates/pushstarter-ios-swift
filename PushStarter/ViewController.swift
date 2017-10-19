@@ -31,7 +31,7 @@ class ViewController : UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.messageReceived(notification:)), name: NSNotification.Name(rawValue: "message_received"), object: nil)
     }
     
-    func registered() {
+    @objc func registered() {
         print("registered")
         
         let defaults = UserDefaults.standard
@@ -47,13 +47,13 @@ class ViewController : UITableViewController {
         tableView.reloadData()
     }
     
-    func errorRegistration() {
+    @objc func errorRegistration() {
         let alert = UIAlertController(title: "Registration Error", message: "Please verify the provisionioning profile and the UPS details have been setup correctly.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
-    func messageReceived(notification: Notification) {
+    @objc func messageReceived(notification: Notification) {
         print("received")
         
         if let aps : [String: AnyObject] = notification.userInfo!["aps"] as? [String: AnyObject] {
