@@ -1,25 +1,28 @@
 # pushstarter-ios-swift
-[![Build Status](https://travis-ci.org/feedhenry-templates/pushstarter-ios-swift.png)](https://travis-ci.org/feedhenry-templates/pushstarter-ios-swift)
+[![circle-ci](https://img.shields.io/circleci/project/github/feedhenry-templates/pushstarter-ios-swift/master.svg)](https://circleci.com/gh/feedhenry-templates/pushstarter-ios-swift)
+
 
 > ObjC version of PushStarter iOS app is available [here](https://github.com/feedhenry-templates/pushstarter-ios-app/).
 
-Author: Corinne Krych   
-Level: Intermediate   
-Technologies: Swift 3, iOS, RHMAP, CocoaPods.   
-Summary: A demonstration of how to include basic push functionality with RHMAP.   
-Community Project : [Feed Henry](http://feedhenry.org)   
+Author: Corinne Krych  
+Level: Intermediate  
+Technologies: Swift 4, iOS, RHMAP, CocoaPods.  
+Summary: A demonstration of how to include basic push functionality with RHMAP.  
+Community Project : [Feed Henry](http://feedhenry.org)  
 Target Product: RHMAP  
-Product Versions: RHMAP 3.7.0+   
-Source: https://github.com/feedhenry-templates/pushstarter-ios-swift   
-Prerequisites: fh-ios-swift-sdk: 5+, Xcode: 8+, iOS SDK: iOS 9+, CocoaPods 1.3.0+
+Product Versions: RHMAP 3.7.0+  
+Source: https://github.com/feedhenry-templates/pushstarter-ios-swift  
+Prerequisites: fh-ios-swift-sdk: 6+, Xcode: 9+, iOS SDK: iOS 9+, CocoaPods 1.3.0+
 
 ## What is it?
 
-The ```PushStarter``` project demonstrates how to include basic push functionality using [fh-ios-sdk](https://github.com/feedhenry/fh-ios-sdk) and Red Hat Mobile Application Platform. The developer should:
-- enable push notifications in the iOS app within RHMAP, 
-- enter required certificate,
-- send test notification via RHMAP studio Push tab.
-The iOS app catches the notification and displays them as a list.
+The `PushStarter` project demonstrates how to include basic push functionality using [fh-ios-swift-sdk](https://github.com/feedhenry/fh-ios-swift-sdk) and Red Hat Mobile Application Platform. The developer should:
+
+1. enable push notifications in the iOS app within RHMAP
+2. enter required certificate
+3. send test notification via RHMAP studio Push tab.
+
+The iOS app catches the notifications and displays them as a list.
 
 If you do not have access to a RHMAP instance, you can sign up for a free instance at [https://openshift.feedhenry.com/](https://openshift.feedhenry.com/).
 
@@ -36,16 +39,16 @@ If you wish to contribute to this template, the following information may be hel
 ## Build instructions
 
 1. Clone this project
-1. Populate ```PushStarter/fhconfig.plist``` with your values as explained [here](http://docs.feedhenry.com/v3/dev_tools/sdks/ios.html#ios-configure).
-1. Run ```pod install```
-1. Open PushStarter.xcworkspace
+1. Populate `PushStarter/fhconfig.plist` with your values as explained [here](https://access.redhat.com/documentation/en-us/red_hat_mobile_application_platform_hosted/3/html/client_sdk/native-ios-swift).
+1. Run `pod install`
+1. Open `PushStarter.xcworkspace`
 1. Run the project
  
 ## How does it work?
 
 ### FH registers for remote push notification
 
-In ```PushStarter/AppDelegate.swift``` you register for notification as below:
+In `PushStarter/AppDelegate.swift` you register for notification as below:
 
 ```Swift
 func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
@@ -61,7 +64,7 @@ Register FH to receive remote push notification with success [1] and failure [2]
 
 ### FH receives remote push notification
 
-To receive notification, in ```PushStarter/AppDelegate.swift```:
+To receive notification, in `PushStarter/AppDelegate.swift`:
 
 ```Swift
 func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
@@ -76,7 +79,7 @@ func application(_ application: UIApplication, didReceiveRemoteNotification user
 ```
 ### iOS9 and non TLS1.2 backend
 
-If your RHMAP is depoyed without TLS1.2 support, open as source  ```PushStarter/PushStarter-Info.plist``` add the exception lines:
+If your RHMAP is deployed without TLS1.2 support, open `PushStarter/PushStarter-Info.plist` as source and add the exception lines:
 
 ```
   <key>NSAppTransportSecurity</key>
